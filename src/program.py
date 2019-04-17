@@ -22,13 +22,13 @@ def print_output():
 
 def take_input():
 	inp = input('Enter the character:')
-	indices = find_indices(inp)
-	print(indices)
+	indices = find_indices(inp[0])
 
 	if len(indices) == 0:
 		global lives
 		lives = lives - 1
 		print('Wrong')
+		print(f'{lives} lives left')
 		if lives == 0:
 			print('Game Over')
 			print(word)
@@ -36,7 +36,8 @@ def take_input():
 	else:
 		for x in indices:
 			out[x] = inp
-		if word.find(empty_char) == -1:
+
+		if not (empty_char in out):
 			print('You Won!!!')
 			return
 
@@ -46,13 +47,12 @@ def take_input():
 
 def find_indices(c):
 	global word
-	out = []
+	indices = []
 	for i in range(len(word)):
-		print(word[i] == c)
-		if word[i] == c:
-			out.append(i)
+		if word[i].lower() == c.lower():
+			indices.append(i)
 	
-	return out
+	return indices
 
 
 if __name__ == '__main__':
