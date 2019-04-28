@@ -4,6 +4,7 @@ lives = 0
 out = []
 word = ''
 empty_char = '_'
+wrong_inputs = set()
 
 def start_game():
 	global lives
@@ -21,23 +22,29 @@ def print_output():
 		print(x, end = ' ')
 
 def take_input():
-	inp = input('Enter the character:')
-	indices = find_indices(inp[0])
+	inp = input('Enter the character:')[0]
+	indices = find_indices(inp)
 
 	if len(indices) == 0:
 		global lives
-		lives = lives - 1
+		if(inp not in wrong_inputs):
+			wrong_inputs.add(inp)
+			lives = lives - 1
+			if lives == 0:
+				print('Game Over')
+				print(word)
+				return
+
 		print('Wrong')
 		print(f'{lives} lives left')
-		if lives == 0:
-			print('Game Over')
-			print(word)
-			return
+		
+		
 	else:
 		for x in indices:
 			out[x] = inp
 
 		if not (empty_char in out):
+			print(word)
 			print('You Won!!!')
 			return
 
